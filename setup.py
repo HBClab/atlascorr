@@ -41,11 +41,11 @@ setup(
     long_description=readme,
     author="James Kent",
     author_email='james-kent@uiowa.edu',
-    url='https://github.com/jdkent/atlascorr',
+    url='https://github.com/HBClab/atlascorr',
     packages=find_packages(exclude=['docs', 'tests']),
     entry_points={
         'console_scripts': [
-            # 'some.module:some_function',
+            'atlascorr = atlascorr.atlas_correlations:main',
             ],
         },
     include_package_data=True,
