@@ -62,11 +62,11 @@ def get_files(img):
         r'_preproc.nii.gz')
 
     def get_confound(img):
-        CONF_REPL = (r'\g<path>',
-                     r'\g<subject_id>',
-                     r'_\g<session_id>',
-                     r'_\g<task_id>',
-                     r'_\g<run_id>',
+        CONF_REPL = (r'\g<path>'
+                     r'\g<subject_id>'
+                     r'_\g<session_id>'
+                     r'_\g<task_id>'
+                     r'_\g<run_id>'
                      r'_bold_confounds.tsv')
         conf_tmp = PROC_EXPR.sub(CONF_REPL, img)
         conf = re.sub('_+', '_', conf_tmp)
@@ -76,11 +76,11 @@ def get_files(img):
             raise IOError
 
     def get_brainmask(img):
-        MASK_REPL = (r'\g<path>',
-                     r'\g<subject_id>',
-                     r'_\g<session_id>',
-                     r'_\g<task_id>',
-                     r'_\g<run_id>',
+        MASK_REPL = (r'\g<path>'
+                     r'\g<subject_id>'
+                     r'_\g<session_id>'
+                     r'_\g<task_id>'
+                     r'_\g<run_id>'
                      r'_bold_\g<space_id>_brainmask.nii.gz')
         bmask = PROC_EXPR.sub(MASK_REPL, img)
         bmask = re.sub('_+', '_', bmask)
@@ -137,7 +137,7 @@ def write_out_corr_matrix(corr_matrix, atlas_lut, img, output_dir):
     import pandas as pd
     import os
     import re
- 
+
     PROC_EXPR = re.compile(
         r'^(?P<path>.*/)?'
         r'(?P<subject_id>sub-[a-zA-Z0-9]+)'
@@ -425,8 +425,6 @@ def main():
         # initialize connectivity workflow
         connectivity_wf = init_connectivity_wf(workdir, outdir, opts.hp, opts.lp, os.path.abspath(opts.atlas_img),
                                                os.path.abspath(opts.atlas_lut), opts.confounds)
-
-
 
         imgs_criteria = {
                             'imgs':
