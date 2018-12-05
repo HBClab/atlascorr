@@ -1,5 +1,4 @@
 import atlascorr.atlas_correlations as ac
-import os
 import pandas as pd
 import nibabel as nib
 import numpy as np
@@ -32,12 +31,14 @@ def atlas_file(deriv_dir):
     atlas_img.to_filename(str(atlas_file))
     return atlas_file
 
+
 @pytest.fixture(scope='session')
 def atlas_lut(deriv_dir):
     atlas_df = pd.DataFrame({'regions': ['region1', 'region2', 'region3']})
     atlas_lut = deriv_dir.join('atlas_lut.tsv')
     atlas_df.to_csv(str(atlas_lut), sep='\t', index=False)
     return atlas_lut
+
 
 @pytest.fixture(scope='session')
 def bold_file(prep_dir):
@@ -51,8 +52,7 @@ def bold_file(prep_dir):
 @pytest.fixture(scope='session')
 def confounds_file(prep_dir):
     confounds_df = pd.DataFrame({'FramewiseDisplacement': [1.] * 10,
-                                 'CSF': [1.] * 10,
-                                })
+                                 'CSF': [1.] * 10})
     confounds_file = prep_dir.join('sub-01_ses-pre_task-rest_bold_confounds.tsv')
     confounds_df.to_csv(str(confounds_file), sep='\t', index=False)
     return confounds_file
@@ -66,12 +66,13 @@ def brainmask_file(prep_dir):
     brainmask.to_filename(str(brainmask_file))
     return brainmask_file
 
+
 @pytest.fixture(scope='session')
 def corrMatrix_file(atlas_dir):
     corr = np.array([[0.,  1.07, -1.07],
                     [1.07, 0., -1.07],
                     [-1.07, -1.07, 0.]])
-    
+
     corr_df = pd.DataFrame(corr,
                            columns=['region1', 'region2', 'region3'],
                            index=['region1', 'region2', 'region3'])
@@ -79,6 +80,7 @@ def corrMatrix_file(atlas_dir):
     corrMatrix_file = atlas_dir.join('sub-01_ses-pre_task-rest_corrMatrix.tsv')
     corr_df.to_csv(str(corrMatrix_file), sep='\t')
     return corrMatrix_file
+
 
 def test_get_files(bold_file, confounds_file, brainmask_file):
     # FMRIPREP outputs
@@ -104,7 +106,7 @@ def test_extract_ts(bold_file, brainmask_file, confounds_file, atlas_file):
     lp = None
 
     test_array = np.atleast_2d(np.zeros(10)).T
-    func_out = ac.extract_ts(str(bold_file), 
+    func_out = ac.extract_ts(str(bold_file),
                              str(brainmask_file),
                              str(atlas_file),
                              confounds_df, hp, lp)
@@ -188,7 +190,6 @@ def test_merge_dfs():
                                            'region1-region2': .99,
                                            'region1-region3': -.99,
                                            'region2-region3': -.57}])
-
 
     dfs = [inpt_df1, inpt_df2]
 
