@@ -6,9 +6,14 @@ cache:
     - $HOME/.cache/pip
     - $HOME/.ccache  # https://github.com/travis-ci/travis-ci/issues/5853
 
+env:
+  global:
+    # Doctr deploy key for HBClab/atlascorr
+    - secure: "yKHkSj7cXmbBwSt7JrQX8mo1mzpC0gE8uhC4J1pR6L6NbPZwKdnSAjSF2QAXhwlpUGPmYFXLvAtHkkf1JNpqSg+YqTTzlWn092a2RFanQQN9M2GOdrm1HQVA4BfX0q5yzFapJf00ntTWDpTYFkj4zvVEs+K0te8zJtJZ3FEgxMgEqRQw+vPe/+3eLL1iEo2jyW/PsHKQl3MJh9CjQ+1YVZtEgTKLAfefgYmyG9s35cyCQH6st6QvoxwXw24hPbMbMSbhQyqyT6nMCVVJvYjjT2YcUKF/6E5+PFX9JveKUr0D/vttySfEQsUNW7W7v1r8WRdlLoIcxd+AfnKyq5hf0Y/dfJ9MMbPqj+dmcuZzH2HX7RMJOmOTsGyQUqLazBHC4CFZk2U2muhuc8kE+IZzvYxsJSONSXj12zKmVBSNbVPCdv01PSB9ZFGUIluMfD/8g6RNCUy3pxnpBOqMJG7yg5uUFQbxlHfuchV16pwmPpMp9jgSmZozbtErUSA+XHhHpRM0eQ5SM4h0xmv+otTmszcCFqHtYps+zLe2m8BZKbODQIF+C6ejPWWyG5gxiqA5oaAYAHaLr9/Xd2QhXSbFZBT/q+vJfXWvK6bcUkjhl0BNJU4BmEgp7iMD3l12xRSXLlsxDiKLe/pmE/yQXoLjH/SbVN+s4NydDdzHAPyUT/w="
+
 before_install:
   - sudo apt-get update
-  - sudo apt-get install -y graphviz
+  - sudo apt-get install -y graphviz # https://github.com/nipy/nipype/issues/858
 
 install:
   # Install this package and the packages listed in requirements.txt.
@@ -21,4 +26,8 @@ script:
   - coverage report -m  # Generate test coverage report.
   - codecov  # Upload the report to codecov.
   - flake8 --max-line-length=115  # Enforce code style (but relax line length limit a bit).
+  - set -e
   - make -C docs html  # Build the documentation.
+  - pip install doctr
+  - doctr deploy --built-docs docs/build/html .  # Publish the documentation.
+
