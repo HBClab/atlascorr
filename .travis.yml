@@ -28,6 +28,6 @@ script:
   - flake8 --max-line-length=115  # Enforce code style (but relax line length limit a bit).
   - set -e
   - make -C docs html  # Build the documentation.
-  - pip install doctr
+  - pip install git+https://github.com/drdoctr/doctr.git
   - doctr deploy --built-docs docs/build/html .  # Publish the documentation.
 
