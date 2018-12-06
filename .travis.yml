@@ -6,6 +6,10 @@ cache:
     - $HOME/.cache/pip
     - $HOME/.ccache  # https://github.com/travis-ci/travis-ci/issues/5853
 
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y graphviz
+
 install:
   # Install this package and the packages listed in requirements.txt.
   - pip install .
