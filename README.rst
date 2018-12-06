@@ -12,7 +12,7 @@ atlascorr
 Generates atlas-based timeseries correlations from fMRI.
 
 * Free software: 3-clause BSD license
-* Documentation: (COMING SOON!) https://jdkent.github.io/atlascorr.
+* Documentation: https://hbclab.github.io/atlascorr/
 
 Features
 --------
