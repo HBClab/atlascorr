@@ -11,4 +11,6 @@ atlascorr Documentation
 
    installation
    usage
+   workflows
+   functions
    release-history
