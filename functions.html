@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Functions &mdash; atlascorr 0.post17+gc645d3a documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release History" href="release-history.html" />
+    <link rel="prev" title="Workflows" href="workflows.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> atlascorr
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.post17+gc645d3a
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflows.html">Workflows</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#individual-bold-file-functions">Individual Bold File Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#group-level-functions">Group Level Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release-history.html">Release History</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">atlascorr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/functions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="functions">
+<h1>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="individual-bold-file-functions">
+<h2>Individual Bold File Functions<a class="headerlink" href="#individual-bold-file-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="atlascorr.atlas_correlations.get_files">
+<code class="descclassname">atlascorr.atlas_correlations.</code><code class="descname">get_files</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/atlascorr/atlas_correlations.html#get_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#atlascorr.atlas_correlations.get_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the brainmask and confound files given the bold file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>img</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">full path and name of the bold file</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>confound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">full path and name of the confounds file</p>
+</dd>
+<dt><strong>brainmask</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">full path and name of the brainmask file</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atlascorr.atlas_correlations.proc_confounds">
+<code class="descclassname">atlascorr.atlas_correlations.</code><code class="descname">proc_confounds</code><span class="sig-paren">(</span><em>confounds</em>, <em>confound_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/atlascorr/atlas_correlations.html#proc_confounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#atlascorr.atlas_correlations.proc_confounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter confounds file to selected confounds &amp;
+replaces “n/a”s in confounds file with the mean.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>confounds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd><p class="first last">list of confounds to include in the model</p>
+</dd>
+<dt><strong>confounds_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">full path and name of the confounds file</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>confounds_df</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.core.frame.DataFrame</span></dt>
+<dd><p class="first last">dataframe containing the selected confounds</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atlascorr.atlas_correlations.make_corr_matrix">
+<code class="descclassname">atlascorr.atlas_correlations.</code><code class="descname">make_corr_matrix</code><span class="sig-paren">(</span><em>ts_matrix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/atlascorr/atlas_correlations.html#make_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#atlascorr.atlas_correlations.make_corr_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a symmetric pearson’s r-&gt;z transforme correlation matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>ts_matrix</strong> <span class="classifier-delimiter">:</span> <span class="classifier">numpy.ndarray</span></dt>
+<dd><p class="first last">2D numpy array with each column representing an atlas region
+and each row representing a volume (time point)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>zcorr_matrix</strong> <span class="classifier-delimiter">:</span> <span class="classifier">numpy.ndarray</span></dt>
+<dd><p class="first last">2D symmetric matrix measuring region-region correlations
+main diagnal is all zeros</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atlascorr.atlas_correlations.write_out_corr_matrix">
+<code class="descclassname">atlascorr.atlas_correlations.</code><code class="descname">write_out_corr_matrix</code><span class="sig-paren">(</span><em>corr_matrix</em>, <em>atlas_lut</em>, <em>img</em>, <em>output_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/atlascorr/atlas_correlations.html#write_out_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#atlascorr.atlas_correlations.write_out_corr_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out a symmetric correlation matrix using BIDS naming conventions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>corr_matrix</strong> <span class="classifier-delimiter">:</span> <span class="classifier">numpy.ndarray</span></dt>
+<dd><p class="first last">2D symmetric matrix measuring region-region correlations
+main diagnal is all zeros</p>
+</dd>
+<dt><strong>atlas_lut</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">full path and name to atlas lookup tsv with two columns
+(regions and index)</p>
+</dd>
+<dt><strong>img</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">full path and name of the bold file</p>
+</dd>
+<dt><strong>output_dir</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">full path to the base directory where all correlation matrices
+will be written out to.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>dst</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">full path and name of the correlation matrix</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="group-level-functions">
+<h2>Group Level Functions<a class="headerlink" href="#group-level-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="atlascorr.atlas_correlations.proc_matrix">
+<code class="descclassname">atlascorr.atlas_correlations.</code><code class="descname">proc_matrix</code><span class="sig-paren">(</span><em>matrix_tsv</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/atlascorr/atlas_correlations.html#proc_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#atlascorr.atlas_correlations.proc_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vectorize symmetric correlation matrix so that
+each unique region-region correlation gets a column.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>matrix_tsv</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">full path and name of the correlation matrix</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>flat_df</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.core.frame.DataFrame</span></dt>
+<dd><p class="first last">a flat dataframe that is one entry and has as many columns
+as there are unique region-region pairs</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atlascorr.atlas_correlations.merge_dfs">
+<code class="descclassname">atlascorr.atlas_correlations.</code><code class="descname">merge_dfs</code><span class="sig-paren">(</span><em>dfs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/atlascorr/atlas_correlations.html#merge_dfs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#atlascorr.atlas_correlations.merge_dfs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merge a list of dataframes where each contains one row
+showing all unique region-region pairs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>dfs</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd><p class="first last">list of dataframes where each contains one row
+showing all unique region-region pairs</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out_df</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.core.frame.DataFrame</span></dt>
+<dd><p class="first last">merged dataframe where each row represents a unique scan</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atlascorr.atlas_correlations.write_out_group_tsv">
+<code class="descclassname">atlascorr.atlas_correlations.</code><code class="descname">write_out_group_tsv</code><span class="sig-paren">(</span><em>outdir</em>, <em>df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/atlascorr/atlas_correlations.html#write_out_group_tsv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#atlascorr.atlas_correlations.write_out_group_tsv" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>outdir <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>full path to the output directory for the group tsv</dd>
+<dt>df <span class="classifier-delimiter">:</span> <span class="classifier">pandas.core.frame.DataFrame</span></dt>
+<dd>dataframe where each row represents a unique scan
+and each column is a unique region-region pair</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="release-history.html" class="btn btn-neutral float-right" title="Release History" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="workflows.html" class="btn btn-neutral" title="Workflows" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, James Kent
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="_static/copybutton.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
