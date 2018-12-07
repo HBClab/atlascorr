@@ -1,7 +1,6 @@
 # pybids has to be greater than 0.5
-from nipype.interfaces.io import BIDSDataGrabber
+from .interfaces import BIDSDataGrabberPatch
 from nipype.pipeline import engine as pe
-import json
 from argparse import ArgumentParser
 from nipype.interfaces import utility as niu
 import os
@@ -21,12 +20,6 @@ def main():
         os.path.dirname(
             os.path.abspath(opts.deriv_pipeline)), 'work')
     os.makedirs(workdir, exist_ok=True)
-
-    if opts.bids_config_file:
-        bids_config = json.load(open(opts.bids_config_file, 'r'))
-        infields = [i['name'] for i in bids_config['entities']]
-    else:
-        infields = None
 
     if opts.analysis_level == 'participant':
         # initialize participant workflow
@@ -55,8 +48,8 @@ def main():
             imgs_criteria['matrices']['variant'] = opts.variant
 
         input_node = pe.Node(
-            BIDSDataGrabber(
-                infields=infields,
+            BIDSDataGrabberPatch(
+                derivatives=True,
                 output_query=imgs_criteria,
                 base_dir=os.path.abspath(opts.deriv_pipeline)),
             name='input_node')
@@ -102,8 +95,8 @@ def main():
         group_collection_wf = init_group_collection_wf(work_dir=workdir,
                                                        outdir=input_dir)
         input_node = pe.Node(
-            BIDSDataGrabber(
-                infields=infields,
+            BIDSDataGrabberPatch(
+                derivatives=True,
                 output_query=matrices_criteria,
                 base_dir=input_dir),
             name='input_node')
@@ -135,8 +128,6 @@ def get_parser():
     parser.add_argument('analysis_level', choices=['participant', 'group'],
                         help='run participant level analysis, or aggregate '
                              'group level results')
-    parser.add_argument('--bids-config-file', action='store', default=None,
-                        help='config file to pass into BIDSDataGrabber')
     parser.add_argument('--participant_label', '--participant-label',
                         action='store', nargs='+',
                         help='one or more participant identifiers with the '

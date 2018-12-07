@@ -1,10 +1,10 @@
 # List required packages in this file, one per line.
-pybids==0.5.1
+pybids==0.6.4
 matplotlib==2.2.2
 networkx==2.1
 nibabel==2.2.1
 nilearn==0.4.1
-nipype==1.0.4
+nipype==1.1.5
 numpy==1.14.3
 pandas==0.23.0
 scikit-learn==0.19.1
