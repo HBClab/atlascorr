@@ -49,7 +49,7 @@ def main():
 
         input_node = pe.Node(
             BIDSDataGrabberPatch(
-                derivatives=True,
+                domains=['bids', 'derivatives'],
                 output_query=imgs_criteria,
                 base_dir=os.path.abspath(opts.deriv_pipeline)),
             name='input_node')
@@ -96,7 +96,7 @@ def main():
                                                        outdir=input_dir)
         input_node = pe.Node(
             BIDSDataGrabberPatch(
-                derivatives=True,
+                domains=['bids', 'derivatives'],
                 output_query=matrices_criteria,
                 base_dir=input_dir),
             name='input_node')
