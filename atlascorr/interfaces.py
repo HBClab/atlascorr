@@ -1,13 +1,29 @@
 from nipype.interfaces.io import BIDSDataGrabber, BIDSDataGrabberInputSpec
 from nipype.interfaces.base import traits, isdefined, Undefined
-import bids as bidslayout
+# import bids as bidslayout
 from nipype import logging
+from packaging import version
+
+have_pybids = True
+try:
+    import bids
+    bids_ver = version.parse(bids.__version__)
+except ImportError:
+    have_pybids = False
+
+if have_pybids:
+    try:
+        from bids import layout as bidslayout
+    except ImportError:
+        from bids import grabbids as bidslayout
 
 iflogger = logging.getLogger('nipype.interface')
 
 
 class BIDSDataGrabberInputSpecPatch(BIDSDataGrabberInputSpec):
-    derivatives = traits.Bool(desc='use derivative entities in layout')
+    domains = traits.Either(None, traits.List(),
+                            usedefault=True,
+                            desc='pass list of domains for layout to search for')
 
 
 class BIDSDataGrabberPatch(BIDSDataGrabber):
@@ -17,12 +33,16 @@ class BIDSDataGrabberPatch(BIDSDataGrabber):
         exclude = None
         if self.inputs.strict:
             exclude = ['derivatives/', 'code/', 'sourcedata/']
-        if self.inputs.derivatives:
-            domains = ['bids', 'derivatives']
-        else:
-            domains = ['bids']
 
-        layout = bidslayout.BIDSLayout((self.inputs.base_dir, domains), exclude=exclude)
+        if bids_ver < version.parse('0.5'):
+            raise ImportError("pybids must be >= 0.5")
+        elif bids_ver >= version.parse('0.5') and bids_ver < version.parse('0.6'):
+            layout = bidslayout.BIDSLayout(self.inputs.base_dir, config=self.inputs.domains, exclude=exclude)
+        else:
+            if self.inputs.domains is None:
+                self.inputs.domains = ['bids']
+            layout = bidslayout.BIDSLayout((self.inputs.base_dir, self.inputs.domains), exclude=exclude)
+
         # If infield is not given nm input value, silently ignore
         filters = {}
         for key in self._infields:
