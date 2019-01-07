@@ -215,7 +215,7 @@ def init_connectivity_wf(work_dir, output_dir, hp, lp,
         niu.Function(
             function=get_files,
             input_names=['img'],
-            output_names=['confounds', 'brainmask']),
+            output_names=['confounds', 'brainmask', 'new_bids']),
         iterfield=['img'],
         name='get_files_node')
 
@@ -256,7 +256,7 @@ def init_connectivity_wf(work_dir, output_dir, hp, lp,
     write_out_corr_matrix_node = pe.MapNode(
         niu.Function(
             function=write_out_corr_matrix,
-            input_names=['corr_matrix', 'atlas_lut', 'img', 'output_dir'],
+            input_names=['corr_matrix', 'atlas_lut', 'img', 'output_dir', 'new_bids'],
             output_names=['matrix_tsv']),
         iterfield=['corr_matrix', 'img'],
         name='write_out_corr_matrix_node')
@@ -276,6 +276,8 @@ def init_connectivity_wf(work_dir, output_dir, hp, lp,
              ('img', 'img')]),
         (extract_ts_node, make_corr_matrix_node,
             [('ts_matrix', 'ts_matrix')]),
+        (get_files_node, write_out_corr_matrix_node,
+            [('new_bids', 'new_bids')]),
         (make_corr_matrix_node, write_out_corr_matrix_node,
             [('zcorr_matrix', 'corr_matrix')]),
         (input_node, write_out_corr_matrix_node,
@@ -458,7 +460,7 @@ def get_files(img):
             raise IOError('cannot find {bmask}'.format(bmask=bmask))
     confound = get_confound(img, new_bids)
     brainmask = get_brainmask(img, new_bids)
-    return confound, brainmask
+    return confound, brainmask, new_bids
 
 
 def proc_confounds(confounds, confound_file):
@@ -556,7 +558,7 @@ def make_corr_matrix(ts_matrix):
     return zcorr_matrix
 
 
-def write_out_corr_matrix(corr_matrix, atlas_lut, img, output_dir):
+def write_out_corr_matrix(corr_matrix, atlas_lut, img, output_dir, new_bids):
     """
     Write out a symmetric correlation matrix using BIDS naming conventions
 
@@ -583,18 +585,31 @@ def write_out_corr_matrix(corr_matrix, atlas_lut, img, output_dir):
     import os
     import re
 
-    PROC_EXPR = re.compile(
-        r'^(?P<path>.*/)?'
-        r'(?P<subject_id>sub-[a-zA-Z0-9]+)'
-        r'(_(?P<session_id>ses-[a-zA-Z0-9]+))?'
-        r'(_(?P<task_id>task-[a-zA-Z0-9]+))?'
-        r'(_(?P<acq_id>acq-[a-zA-Z0-9]+))?'
-        r'(_(?P<rec_id>rec-[a-zA-Z0-9]+))?'
-        r'(_(?P<run_id>run-[a-zA-Z0-9]+))?'
-        r'_bold'
-        r'(_(?P<space_id>space-[a-zA-Z0-9]+))?'
-        r'(_(?P<variant_id>variant-[a-zA-Z0-9]+))?'
-        r'_preproc.nii.gz')
+    if new_bids:
+        PROC_EXPR = re.compile(
+                r'^(?P<path>.*/)?'
+                r'(?P<subject_id>sub-[a-zA-Z0-9]+)'
+                r'(_(?P<session_id>ses-[a-zA-Z0-9]+))?'
+                r'(_(?P<task_id>task-[a-zA-Z0-9]+))?'
+                r'(_(?P<acq_id>acq-[a-zA-Z0-9]+))?'
+                r'(_(?P<rec_id>rec-[a-zA-Z0-9]+))?'
+                r'(_(?P<run_id>run-[a-zA-Z0-9]+))?'
+                r'(_(?P<space_id>space-[a-zA-Z0-9]+))?'
+                r'(_(?P<desc_id>desc-[a-zA-Z0-9]+))?'
+                r'_bold.nii.gz')
+    else:
+        PROC_EXPR = re.compile(
+            r'^(?P<path>.*/)?'
+            r'(?P<subject_id>sub-[a-zA-Z0-9]+)'
+            r'(_(?P<session_id>ses-[a-zA-Z0-9]+))?'
+            r'(_(?P<task_id>task-[a-zA-Z0-9]+))?'
+            r'(_(?P<acq_id>acq-[a-zA-Z0-9]+))?'
+            r'(_(?P<rec_id>rec-[a-zA-Z0-9]+))?'
+            r'(_(?P<run_id>run-[a-zA-Z0-9]+))?'
+            r'_bold'
+            r'(_(?P<space_id>space-[a-zA-Z0-9]+))?'
+            r'(_(?P<variant_id>variant-[a-zA-Z0-9]+))?'
+            r'_preproc.nii.gz')
 
     name_dict = PROC_EXPR.search(img).groupdict()
 
