@@ -376,26 +376,52 @@ def get_files(img):
     """
     import re
     import os
-    PROC_EXPR = re.compile(
-        r'^(?P<path>.*/)?'
-        r'(?P<subject_id>sub-[a-zA-Z0-9]+)'
-        r'(_(?P<session_id>ses-[a-zA-Z0-9]+))?'
-        r'(_(?P<task_id>task-[a-zA-Z0-9]+))?'
-        r'(_(?P<acq_id>acq-[a-zA-Z0-9]+))?'
-        r'(_(?P<rec_id>rec-[a-zA-Z0-9]+))?'
-        r'(_(?P<run_id>run-[a-zA-Z0-9]+))?'
-        r'_bold'
-        r'(_(?P<space_id>space-[a-zA-Z0-9]+))?'
-        r'(_(?P<variant_id>variant-[a-zA-Z0-9]+))?'
-        r'_preproc.nii.gz')
 
-    def get_confound(img):
-        CONF_REPL = (r'\g<path>'
-                     r'\g<subject_id>'
-                     r'_\g<session_id>'
-                     r'_\g<task_id>'
-                     r'_\g<run_id>'
-                     r'_bold_confounds.tsv')
+    if "desc" in img:
+        new_bids = True
+        PROC_EXPR = re.compile(
+                r'^(?P<path>.*/)?'
+                r'(?P<subject_id>sub-[a-zA-Z0-9]+)'
+                r'(_(?P<session_id>ses-[a-zA-Z0-9]+))?'
+                r'(_(?P<task_id>task-[a-zA-Z0-9]+))?'
+                r'(_(?P<acq_id>acq-[a-zA-Z0-9]+))?'
+                r'(_(?P<rec_id>rec-[a-zA-Z0-9]+))?'
+                r'(_(?P<run_id>run-[a-zA-Z0-9]+))?'
+                r'(_(?P<space_id>space-[a-zA-Z0-9]+))?'
+                r'(_(?P<desc_id>desc-[a-zA-Z0-9]+))?'
+                r'_bold.nii.gz')
+    else:
+        new_bids = False
+        PROC_EXPR = re.compile(
+            r'^(?P<path>.*/)?'
+            r'(?P<subject_id>sub-[a-zA-Z0-9]+)'
+            r'(_(?P<session_id>ses-[a-zA-Z0-9]+))?'
+            r'(_(?P<task_id>task-[a-zA-Z0-9]+))?'
+            r'(_(?P<acq_id>acq-[a-zA-Z0-9]+))?'
+            r'(_(?P<rec_id>rec-[a-zA-Z0-9]+))?'
+            r'(_(?P<run_id>run-[a-zA-Z0-9]+))?'
+            r'_bold'
+            r'(_(?P<space_id>space-[a-zA-Z0-9]+))?'
+            r'(_(?P<variant_id>variant-[a-zA-Z0-9]+))?'
+            r'_preproc.nii.gz')
+
+    def get_confound(img, new_bids):
+        if new_bids:
+            CONF_REPL = (r'\g<path>'
+                         r'\g<subject_id>'
+                         r'_\g<session_id>'
+                         r'_\g<task_id>'
+                         r'_\g<rec_id>'
+                         r'_\g<run_id>'
+                         r'_desc-confounds_regressors.tsv')
+        else:
+            CONF_REPL = (r'\g<path>'
+                         r'\g<subject_id>'
+                         r'_\g<session_id>'
+                         r'_\g<task_id>'
+                         r'_\g<rec_id>'
+                         r'_\g<run_id>'
+                         r'_bold_confounds.tsv')
         conf_tmp = PROC_EXPR.sub(CONF_REPL, img)
         conf = re.sub('_+', '_', conf_tmp)
         if os.path.isfile(conf):
@@ -403,21 +429,31 @@ def get_files(img):
         else:
             raise IOError('cannot find {conf}'.format(conf=conf))
 
-    def get_brainmask(img):
-        MASK_REPL = (r'\g<path>'
-                     r'\g<subject_id>'
-                     r'_\g<session_id>'
-                     r'_\g<task_id>'
-                     r'_\g<run_id>'
-                     r'_bold_\g<space_id>_brainmask.nii.gz')
+    def get_brainmask(img, new_bids):
+        if new_bids:
+            MASK_REPL = (r'\g<path>'
+                         r'\g<subject_id>'
+                         r'_\g<session_id>'
+                         r'_\g<task_id>'
+                         r'_\g<rec_id>'
+                         r'_\g<run_id>'
+                         r'\g<space_id>_desc-brain_mask.nii.gz')
+        else:
+            MASK_REPL = (r'\g<path>'
+                         r'\g<subject_id>'
+                         r'_\g<session_id>'
+                         r'_\g<task_id>'
+                         r'_\g<rec_id>'
+                         r'_\g<run_id>'
+                         r'_bold_\g<space_id>_brainmask.nii.gz')
         bmask = PROC_EXPR.sub(MASK_REPL, img)
         bmask = re.sub('_+', '_', bmask)
         if os.path.isfile(bmask):
             return bmask
         else:
             raise IOError('cannot find {bmask}'.format(bmask=bmask))
-    confound = get_confound(img)
-    brainmask = get_brainmask(img)
+    confound = get_confound(img, new_bids)
+    brainmask = get_brainmask(img, new_bids)
     return confound, brainmask
 
 
