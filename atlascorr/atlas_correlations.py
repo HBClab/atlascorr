@@ -33,7 +33,7 @@ def main():
                             {
                                 'space': 'MNI152NLin2009cAsym',
                                 'modality': 'func',
-                                'type': 'preproc'
+                                'type': ['preproc', 'bold']
                             }
                         }
 
