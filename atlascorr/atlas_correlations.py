@@ -411,6 +411,7 @@ def get_files(img):
                          r'\g<subject_id>'
                          r'_\g<session_id>'
                          r'_\g<task_id>'
+                         r'_\g<acq_id>'
                          r'_\g<rec_id>'
                          r'_\g<run_id>'
                          r'_desc-confounds_regressors.tsv')
@@ -419,6 +420,7 @@ def get_files(img):
                          r'\g<subject_id>'
                          r'_\g<session_id>'
                          r'_\g<task_id>'
+                         r'_\g<acq_id>'
                          r'_\g<rec_id>'
                          r'_\g<run_id>'
                          r'_bold_confounds.tsv')
@@ -435,6 +437,7 @@ def get_files(img):
                          r'\g<subject_id>'
                          r'_\g<session_id>'
                          r'_\g<task_id>'
+                         r'_\g<acq_id>'
                          r'_\g<rec_id>'
                          r'_\g<run_id>'
                          r'\g<space_id>_desc-brain_mask.nii.gz')
@@ -443,6 +446,7 @@ def get_files(img):
                          r'\g<subject_id>'
                          r'_\g<session_id>'
                          r'_\g<task_id>'
+                         r'_\g<acq_id>'
                          r'_\g<rec_id>'
                          r'_\g<run_id>'
                          r'_bold_\g<space_id>_brainmask.nii.gz')
