@@ -690,6 +690,7 @@ def proc_matrix(matrix_tsv):
         r'(_(?P<run_id>run-[a-zA-Z0-9]+))?'
         r'(_(?P<space_id>space-[a-zA-Z0-9]+))?'
         r'(_(?P<variant_id>variant-[a-zA-Z0-9]+))?'
+        r'(_(?P<desc_id>desc-[a-zA-Z0-9]+))?'
         r'_corrMatrix.tsv')
     name_dict = MAT_EXPR.search(os.path.basename(matrix_tsv)).groupdict()
     info_dict = {k: v.split('-')[1] for k, v in name_dict.items() if v is not None}
@@ -719,22 +720,11 @@ def merge_dfs(dfs):
     out_df = pd.concat(dfs, copy=False, ignore_index=True)
     headers = list(out_df.columns.values)
     # if any of these columns exist in the dataframe, move them to the front
-    if 'variant_id' in headers:
-        headers.insert(0, headers.pop(headers.index('variant_id')))
-    if 'space_id' in headers:
-        headers.insert(0, headers.pop(headers.index('space_id')))
-    if 'run_id' in headers:
-        headers.insert(0, headers.pop(headers.index('run_id')))
-    if 'rec_id' in headers:
-        headers.insert(0, headers.pop(headers.index('rec_id')))
-    if 'acq_id' in headers:
-        headers.insert(0, headers.pop(headers.index('acq_id')))
-    if 'task_id' in headers:
-        headers.insert(0, headers.pop(headers.index('task_id')))
-    if 'session_id' in headers:
-        headers.insert(0, headers.pop(headers.index('session_id')))
-    if 'subject_id' in headers:
-        headers.insert(0, headers.pop(headers.index('subject_id')))
+    bids_headers = ['desc_id', 'variant_id', 'space_id', 'run_id',
+                    'rec_id', 'acq_id', 'task_id', 'session_id', 'subject_id']
+    for header in bids_headers:
+        if header in headers:
+            headers.insert(0, headers.pop(headers.index(header)))
 
     out_df = out_df[headers]
 
