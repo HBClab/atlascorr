@@ -597,6 +597,7 @@ def write_out_corr_matrix(corr_matrix, atlas_lut, img, output_dir, new_bids):
                 r'(_(?P<space_id>space-[a-zA-Z0-9]+))?'
                 r'(_(?P<desc_id>desc-[a-zA-Z0-9]+))?'
                 r'_bold.nii.gz')
+        key_order = ['task_id', 'acq_id', 'rec_id', 'run_id', 'space_id', 'desc_id']
     else:
         PROC_EXPR = re.compile(
             r'^(?P<path>.*/)?'
@@ -611,6 +612,8 @@ def write_out_corr_matrix(corr_matrix, atlas_lut, img, output_dir, new_bids):
             r'(_(?P<variant_id>variant-[a-zA-Z0-9]+))?'
             r'_preproc.nii.gz')
 
+        key_order = ['task_id', 'acq_id', 'rec_id', 'run_id', 'space_id', 'variant_id']
+
     name_dict = PROC_EXPR.search(img).groupdict()
 
     bids_output_dir = os.path.join(output_dir,
@@ -620,8 +623,6 @@ def write_out_corr_matrix(corr_matrix, atlas_lut, img, output_dir, new_bids):
     os.makedirs(bids_output_dir, exist_ok=True)
 
     fname = '_'.join([name_dict['subject_id'], name_dict['session_id']])
-
-    key_order = ['task_id', 'acq_id', 'rec_id', 'run_id', 'space_id', 'variant_id']
 
     for key in key_order:
         if name_dict[key]:
